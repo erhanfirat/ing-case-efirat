@@ -1,27 +1,30 @@
-import {QueryClient} from '@tanstack/query-core';
+// import {QueryClient} from '@tanstack/query-core';
 import axios from 'axios';
 
-export const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: 1, // Retry failed requests once
-      refetchOnWindowFocus: false, // Disable refetching when the window regains focus
-    },
-  },
-});
+// Erhan: TanStack Query Lit Adaptor is still in progress
+// When the PR is completed, tanStack can be acivated
+// Check: https://github.com/TanStack/query/pull/7715/files
 
-// https://620d69fb20ac3a4eedc05e3a.mockapi.io/api/
+// export const queryClient = new QueryClient({
+//   defaultOptions: {
+//     queries: {
+//       retry: 1, // Retry failed requests once
+//       refetchOnWindowFocus: false, // Disable refetching when the window regains focus
+//     },
+//   },
+// });
 
 const API = axios.create({
   baseURL: 'https://620d69fb20ac3a4eedc05e3a.mockapi.io/api/',
 });
 
-export const fetchEmployees = async () => {
-  const response = await API.get('employee');
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
+export const fetchEmployeesReq = async () => {
+  try {
+    const response = await API.get('employee');
+    return response.data;
+  } catch (err) {
+    throw new Error('Network error!');
   }
-  return response.data;
 };
 
 export const fetchEmployeeById = async (employeeId) => {
@@ -32,7 +35,7 @@ export const fetchEmployeeById = async (employeeId) => {
   return response.data;
 };
 
-export const createEmployee = async (newEmployee) => {
+export const createEmployeeReq = async (newEmployee) => {
   const response = await API.post(`employee`, newEmployee);
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -40,7 +43,7 @@ export const createEmployee = async (newEmployee) => {
   return response.data;
 };
 
-export const updateEmployee = async (updatedEmployee) => {
+export const updateEmployeeReq = async (updatedEmployee) => {
   const response = await API.put(
     `employee/${updatedEmployee.id}`,
     updatedEmployee
@@ -51,7 +54,7 @@ export const updateEmployee = async (updatedEmployee) => {
   return response.data;
 };
 
-export const deleteEmployee = async (employeeId) => {
+export const deleteEmployeeReq = async (employeeId) => {
   const response = await API.delete(`employee/${employeeId}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
