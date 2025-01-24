@@ -20,9 +20,10 @@ export class App extends LitElement {
     return css`
       :host {
         display: block;
-        border: solid 1px gray;
-        padding: 16px;
-        max-width: 800px;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        font-family: 
       }
     `;
   }

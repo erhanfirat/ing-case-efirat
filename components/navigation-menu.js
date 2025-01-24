@@ -1,11 +1,11 @@
 import {LitElement, html, css} from 'lit';
 
-
 export class NavigationMenu extends LitElement {
   static styles = css`
     nav {
       display: flex;
       gap: 1rem;
+      padding: 0.5rem 0;
     }
     a {
       text-decoration: none;
