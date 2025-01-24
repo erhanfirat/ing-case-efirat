@@ -1,5 +1,7 @@
 import {LitElement, html, css} from 'lit';
 import {Router} from '@vaadin/router';
+import {store} from '../store/store';
+import {addEmployeeAct, updateEmployeeAct} from '../store/employeeActions';
 
 export class EmployeeForm extends LitElement {
   static properties = {
@@ -156,12 +158,18 @@ export class EmployeeForm extends LitElement {
     }
 
     // Trigger an event to handle the form data
-    const formEvent = new CustomEvent('employee-form-submit', {
-      detail: {...this.employee},
-      bubbles: true,
-      composed: true,
-    });
-    this.dispatchEvent(formEvent);
+    // const formEvent = new CustomEvent('employee-form-submit', {
+    //   detail: {...this.employee},
+    //   bubbles: true,
+    //   composed: true,
+    // });
+    // this.dispatchEvent(formEvent);
+
+    store.dispatch(
+      this.employee.id
+        ? updateEmployeeAct(this.employee)
+        : addEmployeeAct(this.employee)
+    );
 
     // Navigate back to the list page
     Router.go('/');
