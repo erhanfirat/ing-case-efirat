@@ -6,6 +6,7 @@
 
 import {LitElement, html, css} from 'lit';
 import {initRouter} from './pages/route';
+import './components/navigation-menu.js';
 
 /**
  * An example element.
@@ -56,10 +57,7 @@ export class App extends LitElement {
 
   render() {
     return html`
-      <nav>
-        <a href="/">Employee List</a>
-        <a href="/add">Add Employee</a>
-      </nav>
+      <navigation-menu></navigation-menu>
       <main id="router-outlet"></main>
     `;
   }
