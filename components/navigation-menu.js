@@ -5,11 +5,12 @@ export class NavigationMenu extends LitElement {
     nav {
       display: flex;
       gap: 1rem;
-      padding: 0.5rem 0;
+      padding: 1rem;
+      background: #333;
     }
     a {
       text-decoration: none;
-      color: blue;
+      color: #fff;
     }
   `;
 

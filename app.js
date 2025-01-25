@@ -21,10 +21,14 @@ export class App extends LitElement {
     return css`
       :host {
         display: block;
-        padding: 1rem;
+        padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: column;
         font-family: 'Roboto', serif;
+      }
+      #router-outlet {
+        padding: 1rem;
       }
     `;
   }

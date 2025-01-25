@@ -49,6 +49,12 @@ export class EmployeeList extends connect(store)(LitElement) {
     li:hover {
       background: #eee;
     }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.1rem;
+    }
   `;
 
   constructor() {
@@ -72,6 +78,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         .toLowerCase()
         .includes(this.searchQuery.toLowerCase())
     );
+    const pageCount = Math.ceil(filteredEmployees.length / this.itemsPerPage);
     const paginatedEmployees = filteredEmployees.slice(
       (this.currentPage - 1) * this.itemsPerPage,
       this.currentPage * this.itemsPerPage
@@ -168,9 +175,15 @@ export class EmployeeList extends connect(store)(LitElement) {
             `}
 
         <!-- Pagination -->
-        <div>
+        <div class="pagination">
+          <icon-button
+            @click="${() => Math.max(this.currentPage--)}"
+            ?disabled="${pageCount < 2}"
+            icon="fa-chevron-left"
+          >
+          </icon-button>
           ${Array.from(
-            {length: Math.ceil(filteredEmployees.length / this.itemsPerPage)},
+            {length: pageCount},
             (_, i) =>
               html`
                 <icon-button
@@ -181,6 +194,12 @@ export class EmployeeList extends connect(store)(LitElement) {
                 </icon-button>
               `
           )}
+          <icon-button
+            @click="${() => Math.min(this.currentPage++, pageCount)}"
+            ?disabled="${pageCount < 2}"
+            icon="fa-chevron-right"
+          >
+          </icon-button>
         </div>
       </div>
     `;
