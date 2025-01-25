@@ -1,8 +1,9 @@
-import {LitElement, html} from 'lit';
+import {LitElement, css, html} from 'lit';
 import {Router} from '@vaadin/router';
 import {connect} from 'pwa-helpers';
 import {store} from '../store/store';
 import {deleteEmployeeAct} from '../store/employeeActions';
+import '.././components/icon-button.js';
 
 export class EmployeeList extends connect(store)(LitElement) {
   static properties = {
@@ -12,6 +13,29 @@ export class EmployeeList extends connect(store)(LitElement) {
     itemsPerPage: {type: Number},
     viewMode: {type: String}, // 'table' or 'list'
   };
+
+  static styles = css`
+    th,
+    td,
+    li {
+      padding: 0.25rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+    td:last-child {
+      padding: 0.25rem 0;
+    }
+    th {
+      padding-top: 1rem;
+    }
+    tr:last-child > td {
+      border-bottom: none;
+    }
+    tr:hover > td,
+    li:hover {
+      background: #eee;
+    }
+  `;
 
   constructor() {
     super();
@@ -39,6 +63,20 @@ export class EmployeeList extends connect(store)(LitElement) {
       this.currentPage * this.itemsPerPage
     );
 
+    const actionButtons = (empId) => html`<icon-button
+        @click="${() => this.editEmployee(empId)}"
+        icon="fa-edit"
+        onlyIcon
+        title="Update"
+      ></icon-button>
+      <icon-button
+        @click="${() => this.deleteEmployee(empId)}"
+        icon="fa-trash"
+        onlyIcon
+        color="red"
+        title="Delete"
+      ></icon-button>`;
+
     return html`
       <div>
         <input
@@ -55,8 +93,14 @@ export class EmployeeList extends connect(store)(LitElement) {
               <table>
                 <thead>
                   <tr>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Department</th>
                     <th>Position</th>
+                    <th>Date of Employment</th>
+                    <th>Birth Date</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -64,16 +108,15 @@ export class EmployeeList extends connect(store)(LitElement) {
                   ${paginatedEmployees.map(
                     (emp) => html`
                       <tr>
-                        <td>${emp.firstName} ${emp.lastName}</td>
+                        <td>${emp.firstName}</td>
+                        <td>${emp.lastName}</td>
+                        <td>${emp.phone}</td>
+                        <td>${emp.department}</td>
+                        <td>${emp.email}</td>
                         <td>${emp.position}</td>
-                        <td>
-                          <button @click="${() => this.editEmployee(emp.id)}">
-                            Edit
-                          </button>
-                          <button @click="${() => this.deleteEmployee(emp.id)}">
-                            Delete
-                          </button>
-                        </td>
+                        <td>${emp.employmentDate}</td>
+                        <td>${emp.birthDate}</td>
+                        <td>${actionButtons(emp.id)}</td>
                       </tr>
                     `
                   )}
@@ -85,13 +128,8 @@ export class EmployeeList extends connect(store)(LitElement) {
                 ${paginatedEmployees.map(
                   (emp) => html`
                     <li>
-                      ${emp.firstName} ${emp.lastName} - ${emp.position}
-                      <button @click="${() => this.editEmployee(emp.id)}">
-                        Edit
-                      </button>
-                      <button @click="${() => this.deleteEmployee(emp.id)}">
-                        Delete
-                      </button>
+                      ${emp.firstName} ${emp.lastName} | ${emp.department}
+                      [${emp.position}] ${actionButtons(emp.id)}
                     </li>
                   `
                 )}
