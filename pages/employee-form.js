@@ -6,7 +6,7 @@ import {addEmployeeAct, updateEmployeeAct} from '../store/employeeActions';
 export class EmployeeForm extends LitElement {
   static properties = {
     employee: {type: Object},
-    isEditMode: {type: Boolean}, // True if editing, false if adding
+    isEditMode: {type: Boolean},
   };
 
   constructor() {
@@ -15,10 +15,10 @@ export class EmployeeForm extends LitElement {
       id: null,
       firstName: '',
       lastName: '',
-      dateOfEmployment: '',
-      dateOfBirth: '',
-      phoneNumber: '',
-      emailAddress: '',
+      employmentDate: '',
+      birthDate: '',
+      phone: '',
+      email: '',
       department: '',
       position: '',
     };
@@ -47,6 +47,17 @@ export class EmployeeForm extends LitElement {
     }
   `;
 
+  connectedCallback() {
+    super.connectedCallback();
+    // Vaadin Router'dan gelen parametre
+    const {id} = this.location.params;
+    if (id) {
+      this.employee = store.getState().employees?.find((emp) => emp.id === id);
+      // TODO: employee bulunamazsa durumu handle edilmeli
+      this.isEditMode = true;
+    }
+  }
+
   render() {
     return html`
       <form @submit="${this.handleSubmit}">
@@ -74,8 +85,8 @@ export class EmployeeForm extends LitElement {
           Date of Employment
           <input
             type="date"
-            .value="${this.employee.dateOfEmployment}"
-            @input="${(e) => (this.employee.dateOfEmployment = e.target.value)}"
+            .value="${this.employee.employmentDate}"
+            @input="${(e) => (this.employee.employmentDate = e.target.value)}"
             required
           />
         </label>
@@ -84,8 +95,8 @@ export class EmployeeForm extends LitElement {
           Date of Birth
           <input
             type="date"
-            .value="${this.employee.dateOfBirth}"
-            @input="${(e) => (this.employee.dateOfBirth = e.target.value)}"
+            .value="${this.employee.birthDate}"
+            @input="${(e) => (this.employee.birthDate = e.target.value)}"
             required
           />
         </label>
@@ -94,8 +105,8 @@ export class EmployeeForm extends LitElement {
           Phone Number
           <input
             type="tel"
-            .value="${this.employee.phoneNumber}"
-            @input="${(e) => (this.employee.phoneNumber = e.target.value)}"
+            .value="${this.employee.phone}"
+            @input="${(e) => (this.employee.phone = e.target.value)}"
             pattern="[0-9]{10}"
             title="Phone number must be 10 digits"
             required
@@ -106,8 +117,8 @@ export class EmployeeForm extends LitElement {
           Email Address
           <input
             type="email"
-            .value="${this.employee.emailAddress}"
-            @input="${(e) => (this.employee.emailAddress = e.target.value)}"
+            .value="${this.employee.email}"
+            @input="${(e) => (this.employee.email = e.target.value)}"
             required
           />
         </label>
@@ -157,6 +168,7 @@ export class EmployeeForm extends LitElement {
       if (!confirmEdit) return;
     }
 
+    // EF: For this case CustomEvent is not needed
     // Trigger an event to handle the form data
     // const formEvent = new CustomEvent('employee-form-submit', {
     //   detail: {...this.employee},
