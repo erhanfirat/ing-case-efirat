@@ -4,6 +4,7 @@ import {connect} from 'pwa-helpers';
 import {store} from '../store/store';
 import {deleteEmployeeAct} from '../store/employeeActions';
 import '.././components/icon-button.js';
+import '.././components/form-input.js';
 
 export class EmployeeList extends connect(store)(LitElement) {
   static properties = {
@@ -15,6 +16,12 @@ export class EmployeeList extends connect(store)(LitElement) {
   };
 
   static styles = css`
+    div.list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     th,
     td,
     li {
@@ -79,13 +86,24 @@ export class EmployeeList extends connect(store)(LitElement) {
 
     return html`
       <div>
-        <input
-          type="text"
-          placeholder="Search employees"
-          @input="${(e) => (this.searchQuery = e.target.value)}"
-        />
-        <button @click="${() => (this.viewMode = 'list')}">List View</button>
-        <button @click="${() => (this.viewMode = 'table')}">Table View</button>
+        <div class="list-header">
+          <form-input
+            type="text"
+            placeholder="Search employees"
+            icon="fa-search"
+            @input="${(e) => (this.searchQuery = e.target.value)}"
+          ></form-input>
+          <div>
+            <icon-button
+              @click="${() => (this.viewMode = 'list')}"
+              label="List View"
+            ></icon-button>
+            <icon-button
+              @click="${() => (this.viewMode = 'table')}"
+              label="Table View"
+            ></icon-button>
+          </div>
+        </div>
 
         ${this.error && html`<p>${this.error}</p>`}
         ${this.viewMode === 'table'
