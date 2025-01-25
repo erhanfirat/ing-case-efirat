@@ -22,6 +22,11 @@ export class EmployeeList extends connect(store)(LitElement) {
       align-items: center;
     }
 
+    table {
+      width: 100%;
+      margin: 0.5rem 0;
+    }
+
     th,
     td,
     li {
@@ -177,25 +182,28 @@ export class EmployeeList extends connect(store)(LitElement) {
         <!-- Pagination -->
         <div class="pagination">
           <icon-button
-            @click="${() => Math.max(this.currentPage--)}"
+            @click="${() => {
+              this.currentPage = Math.max(this.currentPage - 1, 1);
+            }}"
             ?disabled="${pageCount < 2}"
             icon="fa-chevron-left"
           >
           </icon-button>
-          ${Array.from(
-            {length: pageCount},
-            (_, i) =>
-              html`
-                <icon-button
-                  @click="${() => (this.currentPage = i + 1)}"
-                  ?disabled="${this.currentPage === i + 1}"
-                  label="${i + 1}"
+          ${this.getPaginationButtons(this.currentPage, pageCount, 5).map((i) =>
+            i === '...'
+              ? html`<span>...</span>`
+              : html`<icon-button
+                  @click="${() => (this.currentPage = i)}"
+                  ?disabled="${this.currentPage === i}"
+                  label="${i}"
                 >
-                </icon-button>
-              `
+                </icon-button>`
           )}
+
           <icon-button
-            @click="${() => Math.min(this.currentPage++, pageCount)}"
+            @click="${() => {
+              this.currentPage = Math.min(this.currentPage + 1, pageCount);
+            }}"
             ?disabled="${pageCount < 2}"
             icon="fa-chevron-right"
           >
@@ -213,6 +221,54 @@ export class EmployeeList extends connect(store)(LitElement) {
     if (confirm('Are you sure you want to delete this employee?')) {
       store.dispatch(deleteEmployeeAct(id));
     }
+  }
+
+  getPaginationButtons(currentPage, totalPages, maxButtons = 7) {
+    const buttons = [];
+    const half = Math.floor(maxButtons / 2);
+
+    // Eğer toplam sayfa sayısı maxButtons'dan küçük veya eşitse, tüm sayfaları göster
+    if (totalPages <= maxButtons) {
+      for (let i = 1; i <= totalPages; i++) {
+        buttons.push(i);
+      }
+      return buttons;
+    }
+
+    // İlk ve son sayfa her zaman gösterilir
+    buttons.push(1);
+
+    // Ortadaki butonları hesapla
+    let start = Math.max(2, currentPage - half);
+    let end = Math.min(totalPages - 1, currentPage + half);
+
+    // Eğer başlangıç çok küçükse, end'i ayarla
+    if (currentPage <= half) {
+      end = Math.min(totalPages - 1, maxButtons - 2);
+    }
+
+    // Eğer bitiş çok büyükse, start'ı ayarla
+    if (currentPage + half >= totalPages) {
+      start = Math.max(2, totalPages - (maxButtons - 2));
+    }
+
+    // Eğer başlangıç ve bitiş arasında boşluk varsa, ellips ekle
+    if (start > 2) {
+      buttons.push('...');
+    }
+
+    for (let i = start; i <= end; i++) {
+      buttons.push(i);
+    }
+
+    if (end < totalPages - 1) {
+      buttons.push('...');
+    }
+
+    // Son sayfa
+    buttons.push(totalPages);
+
+    return buttons;
   }
 }
 customElements.define('employee-list', EmployeeList);
