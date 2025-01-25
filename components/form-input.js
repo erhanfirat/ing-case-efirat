@@ -37,11 +37,14 @@ export class FormInput extends LitElement {
     input {
       width: 100%;
       padding: 10px 12px;
-      padding-left: 40px;
       font-size: 16px;
       border: 2px solid #ccc;
       border-radius: 5px;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input.withIcon {
+      padding-left: 40px;
     }
 
     input:focus {
@@ -88,13 +91,14 @@ export class FormInput extends LitElement {
       <div class="form-group">
         <label>${this.label}</label>
         <div class="input-container">
-          <fa-icon
+          ${this.icon &&
+          html` <fa-icon
             class="fas ${this.icon} ${this.error ? 'error' : ''} icon"
-          ></fa-icon>
+          ></fa-icon>`}
           <input
             type="${this.type}"
             placeholder="${this.placeholder}"
-            class="${this.error ? 'error' : ''}"
+            class="${this.error ? 'error' : ''} ${this.icon ? 'withIcon' : ''}"
             .value="${this.value}"
             @input="${this._handleInput}"
           />
