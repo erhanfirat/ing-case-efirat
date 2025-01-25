@@ -8,6 +8,7 @@ export class IconButton extends LitElement {
     onlyIcon: {type: Boolean}, // Sadece ikon göster
     title: {type: String}, // Buton tooltip metni
     size: {type: String}, // Botun boyutunu belirler: [sm, md, lg]
+    disabled: {type: Boolean}, // Buton disabled attribute
   };
 
   static styles = css`
@@ -73,6 +74,13 @@ export class IconButton extends LitElement {
       background-color: #5a6268;
     }
 
+    button:disabled,
+    button:hover:disabled {
+      background-color: #d6d6d6;
+      color: #888;
+      cursor: not-allowed;
+    }
+
     /* İkon stili */
     i {
       font-size: 1.2rem;
@@ -87,11 +95,16 @@ export class IconButton extends LitElement {
     this.onlyIcon = false; // Varsayılan olarak metin ve ikon birlikte
     this.title = ''; // Varsayılan tooltip metni
     this.size = 'md'; // Varsayılan buton boyutu md (medium)
+    this.disabled = false; // Varsayılan disabled özelliği false değeri alır
   }
 
   render() {
     return html`
-      <button class="${this.color} ${this.size}" title="${this.title}">
+      <button
+        class="${this.color} ${this.size}"
+        title="${this.title}"
+        ?disabled=${this.disabled}
+      >
         ${this.icon
           ? html`<fa-icon
               class="fas ${this.icon}"

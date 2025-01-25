@@ -142,12 +142,12 @@ export class EmployeeList extends connect(store)(LitElement) {
             {length: Math.ceil(filteredEmployees.length / this.itemsPerPage)},
             (_, i) =>
               html`
-                <button
+                <icon-button
                   @click="${() => (this.currentPage = i + 1)}"
                   ?disabled="${this.currentPage === i + 1}"
+                  label="${i + 1}"
                 >
-                  ${i + 1}
-                </button>
+                </icon-button>
               `
           )}
         </div>
