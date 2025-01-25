@@ -29,13 +29,20 @@ export class EmployeeList extends connect(store)(LitElement) {
       text-align: left;
       border-bottom: 1px solid #ccc;
     }
+    ul {
+      padding-left: 0;
+    }
+    li {
+      list-style: none;
+    }
     td:last-child {
       padding: 0.25rem 0;
     }
     th {
       padding-top: 1rem;
     }
-    tr:last-child > td {
+    tr:last-child > td,
+    li:last-child {
       border-bottom: none;
     }
     tr:hover > td,
