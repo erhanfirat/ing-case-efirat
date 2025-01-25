@@ -60,6 +60,12 @@ export class EmployeeList extends connect(store)(LitElement) {
       justify-content: center;
       gap: 0.1rem;
     }
+    .page-ellipsis {
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   `;
 
   constructor() {
@@ -191,7 +197,7 @@ export class EmployeeList extends connect(store)(LitElement) {
           </icon-button>
           ${this.getPaginationButtons(this.currentPage, pageCount, 5).map((i) =>
             i === '...'
-              ? html`<span>...</span>`
+              ? html`<span class="page-ellipsis">...</span>`
               : html`<icon-button
                   @click="${() => (this.currentPage = i)}"
                   ?disabled="${this.currentPage === i}"
