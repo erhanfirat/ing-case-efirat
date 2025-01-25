@@ -1,3 +1,5 @@
+import {employeeData} from './employeeData';
+
 export const EMP_ACTIONS = {
   fetch: 'FETCH_EMPLOYEES',
   set: 'SET_EMPLOYEE',
@@ -7,30 +9,7 @@ export const EMP_ACTIONS = {
 };
 
 const INITIAL_STATE = {
-  employees: [
-    {
-      firstName: 'Efren',
-      lastName: 'Kautzer',
-      employmentDate: '2024-03-16',
-      birthDate: '1986-08-20',
-      phone: '5556667788',
-      email: 'imelda77@gmail.com',
-      department: 'Analytics',
-      position: 'Junior',
-      id: '1',
-    },
-    {
-      firstName: 'Maribel',
-      lastName: 'Steuber',
-      employmentDate: '2024-03-07',
-      birthDate: '1984-02-12',
-      phone: '5554443322',
-      email: 'Laury.Satterfield@yahoo.com',
-      department: 'Tech',
-      position: 'Senior',
-      id: '2',
-    },
-  ],
+  employees: [...employeeData],
   isLoading: false,
 };
 
