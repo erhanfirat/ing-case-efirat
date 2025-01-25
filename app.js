@@ -7,6 +7,7 @@
 import {LitElement, html, css} from 'lit';
 import {initRouter} from './pages/route';
 import './components/navigation-menu.js';
+import 'fa-icons';
 
 /**
  * An example element.
@@ -23,7 +24,7 @@ export class App extends LitElement {
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        font-family: 
+        font-family: 'Roboto', serif;
       }
     `;
   }
