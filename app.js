@@ -51,7 +51,6 @@ export class App extends LitElement {
   }
 
   firstUpdated() {
-    console.log('Routing initialized!');
     const outlet = this.shadowRoot.getElementById('router-outlet');
     initRouter(outlet); // Initialize the router and attach it to the outlet
   }
