@@ -1,10 +1,10 @@
-// import {QueryClient} from '@tanstack/query-core';
 import axios from 'axios';
 
 // Erhan: TanStack Query Lit Adaptor is still in progress
 // When the PR is completed, tanStack can be acivated
 // Check: https://github.com/TanStack/query/pull/7715/files
 
+// import {QueryClient} from '@tanstack/query-core';
 // export const queryClient = new QueryClient({
 //   defaultOptions: {
 //     queries: {
@@ -14,6 +14,7 @@ import axios from 'axios';
 //   },
 // });
 
+// EF: Axios instance created to handle Authentication and Custom HTTP Req Headers
 const API = axios.create({
   baseURL: 'https://620d69fb20ac3a4eedc05e3a.mockapi.io/api/',
 });
