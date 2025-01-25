@@ -75,6 +75,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         icon="fa-edit"
         onlyIcon
         title="Update"
+        size="sm"
       ></icon-button>
       <icon-button
         @click="${() => this.deleteEmployee(empId)}"
@@ -82,6 +83,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         onlyIcon
         color="red"
         title="Delete"
+        size="sm"
       ></icon-button>`;
 
     return html`
@@ -96,11 +98,15 @@ export class EmployeeList extends connect(store)(LitElement) {
           <div>
             <icon-button
               @click="${() => (this.viewMode = 'list')}"
+              icon="fa-list"
               label="List View"
+              ?disabled=${this.viewMode === 'list'}
             ></icon-button>
             <icon-button
+              icon="fa-table"
               @click="${() => (this.viewMode = 'table')}"
               label="Table View"
+              ?disabled=${this.viewMode === 'table'}
             ></icon-button>
           </div>
         </div>
