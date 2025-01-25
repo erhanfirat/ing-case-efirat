@@ -1,7 +1,10 @@
 import {LitElement, html} from 'lit';
 import {Router} from '@vaadin/router';
+import {connect} from 'pwa-helpers';
+import {store} from '../store/store';
+import {deleteEmployeeAct} from '../store/employeeActions';
 
-export class EmployeeList extends LitElement {
+export class EmployeeList extends connect(store)(LitElement) {
   static properties = {
     employees: {type: Array},
     searchQuery: {type: String},
@@ -17,10 +20,16 @@ export class EmployeeList extends LitElement {
     this.currentPage = 1;
     this.itemsPerPage = 5;
     this.viewMode = 'table';
+    this.isLoading = true;
+    this.error = null;
+  }
+
+  stateChanged(state) {
+    this.employees = state.employees;
   }
 
   render() {
-    const filteredEmployees = this.employees.filter((emp) =>
+    const filteredEmployees = this.employees?.filter((emp) =>
       `${emp.firstName} ${emp.lastName}`
         .toLowerCase()
         .includes(this.searchQuery.toLowerCase())
@@ -40,6 +49,7 @@ export class EmployeeList extends LitElement {
         <button @click="${() => (this.viewMode = 'list')}">List View</button>
         <button @click="${() => (this.viewMode = 'table')}">Table View</button>
 
+        ${this.error && html`<p>${this.error}</p>`}
         ${this.viewMode === 'table'
           ? html`
               <table>
@@ -113,7 +123,7 @@ export class EmployeeList extends LitElement {
 
   deleteEmployee(id) {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.employees = this.employees.filter((emp) => emp.id !== id);
+      store.dispatch(deleteEmployeeAct(id));
     }
   }
 }
