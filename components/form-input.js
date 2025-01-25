@@ -104,7 +104,10 @@ export class FormInput extends LitElement {
             placeholder="${this.placeholder}"
             class="${this.error ? 'error' : ''} ${this.icon ? 'withIcon' : ''}"
             .value="${this.value}"
-            @input="${this._handleInput}"
+            @input="${(e) => {
+              this._handleInput(e);
+              this.validate();
+            }}"
             .pattern="${this.pattern}"
             ?required=${this.required}
           />
