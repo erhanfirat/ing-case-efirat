@@ -8,6 +8,8 @@ export class FormInput extends LitElement {
     error: {type: String}, // Hata mesajı
     value: {type: String}, // Input değeri
     type: {type: String}, // Input türü (örnek: 'text', 'password')
+    required: {type: Boolean}, // Input Required validation özelliği
+    pattern: {type: String}, // Input Pattern validation özelliği
   };
 
   static styles = css`
@@ -78,12 +80,14 @@ export class FormInput extends LitElement {
 
   constructor() {
     super();
-    this.label = ''; // Varsayılan etiket
-    this.placeholder = ''; // Varsayılan placeholder
-    this.icon = ''; // Varsayılan ikon
-    this.error = ''; // Varsayılan olarak hata yok
-    this.value = ''; // Varsayılan input değeri
-    this.type = 'text'; // Varsayılan input türü
+    this.label = '';
+    this.placeholder = '';
+    this.icon = '';
+    this.error = '';
+    this.value = '';
+    this.type = 'text';
+    this.required = false;
+    this.pattern = '';
   }
 
   render() {
@@ -101,6 +105,8 @@ export class FormInput extends LitElement {
             class="${this.error ? 'error' : ''} ${this.icon ? 'withIcon' : ''}"
             .value="${this.value}"
             @input="${this._handleInput}"
+            .pattern="${this.pattern}"
+            ?required=${this.required}
           />
         </div>
         ${this.error ? html`<div class="error">${this.error}</div>` : ''}
@@ -111,6 +117,21 @@ export class FormInput extends LitElement {
   _handleInput(e) {
     this.value = e.target.value;
     this.dispatchEvent(new CustomEvent('input-change', {detail: this.value}));
+  }
+
+  validate() {
+    if (this.required && !this.value.trim()) {
+      this.error = `${this.label} is required`;
+      return false;
+    }
+
+    if (this.pattern && !new RegExp(this.pattern).test(this.value)) {
+      this.error = `${this.label} is not in the correct format`;
+      return false;
+    }
+
+    this.error = '';
+    return true;
   }
 }
 
