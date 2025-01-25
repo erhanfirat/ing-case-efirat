@@ -42,8 +42,21 @@ export const employeeReducer = (state = INITIAL_STATE, action) => {
       return {employees: payload, isLoading: false};
 
     case EMP_ACTIONS.add: {
-      const newEmployees = [...state.employees, payload];
+      return {employees: [...state.employees, payload], isLoading: false};
+    }
+
+    case EMP_ACTIONS.update: {
+      const newEmployees = state.employees.map((emp) =>
+        emp.id === payload.id ? payload : emp
+      );
       return {employees: newEmployees, isLoading: false};
+    }
+
+    case EMP_ACTIONS.delete: {
+      return {
+        employees: state.employees.filter((e) => e.id !== payload),
+        isLoading: false,
+      };
     }
 
     default:
