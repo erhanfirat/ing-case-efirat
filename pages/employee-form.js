@@ -2,6 +2,8 @@ import {LitElement, html, css} from 'lit';
 import {Router} from '@vaadin/router';
 import {store} from '../store/store';
 import {addEmployeeAct, updateEmployeeAct} from '../store/employeeActions';
+import '.././components/icon-button.js';
+import '.././components/form-input.js';
 
 export class EmployeeForm extends LitElement {
   static properties = {
@@ -23,6 +25,7 @@ export class EmployeeForm extends LitElement {
       position: '',
     };
     this.isEditMode = false;
+    this.errors = [];
   }
 
   static styles = css`
@@ -59,69 +62,58 @@ export class EmployeeForm extends LitElement {
   }
 
   render() {
+    const emailPattern = `[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}`;
+
     return html`
       <form @submit="${this.handleSubmit}">
-        <label>
-          First Name
-          <input
-            type="text"
-            .value="${this.employee.firstName}"
-            @input="${(e) => (this.employee.firstName = e.target.value)}"
-            required
-          />
-        </label>
+        <form-input
+          label="First Name"
+          value="${this.employee.firstName}"
+          @input="${(e) => (this.employee.firstName = e.target.value)}"
+          required
+        ></form-input>
 
-        <label>
-          Last Name
-          <input
-            type="text"
-            .value="${this.employee.lastName}"
-            @input="${(e) => (this.employee.lastName = e.target.value)}"
-            required
-          />
-        </label>
+        <form-input
+          label="Last Name"
+          value="${this.employee.lastName}"
+          @input="${(e) => (this.employee.lastName = e.target.value)}"
+          required
+        ></form-input>
 
-        <label>
-          Date of Employment
-          <input
-            type="date"
-            .value="${this.employee.employmentDate}"
-            @input="${(e) => (this.employee.employmentDate = e.target.value)}"
-            required
-          />
-        </label>
+        <form-input
+          label="Date of Employment"
+          type="date"
+          value="${this.employee.employmentDate}"
+          @input="${(e) => (this.employee.employmentDate = e.target.value)}"
+          required
+        ></form-input>
 
-        <label>
-          Date of Birth
-          <input
-            type="date"
-            .value="${this.employee.birthDate}"
-            @input="${(e) => (this.employee.birthDate = e.target.value)}"
-            required
-          />
-        </label>
+        <form-input
+          label="Date of Birth"
+          type="date"
+          value="${this.employee.birthDate}"
+          @input="${(e) => (this.employee.birthDate = e.target.value)}"
+          required
+        ></form-input>
 
-        <label>
-          Phone Number
-          <input
-            type="tel"
-            .value="${this.employee.phone}"
-            @input="${(e) => (this.employee.phone = e.target.value)}"
-            pattern="[0-9]{10}"
-            title="Phone number must be 10 digits"
-            required
-          />
-        </label>
+        <form-input
+          label="Phone Number (5XX XXX XXXX)"
+          type="tel"
+          value="${this.employee.phone}"
+          @input="${(e) => (this.employee.phone = e.target.value)}"
+          pattern="[0-9]{10}"
+          title="Phone number must be 10 digits"
+          required
+        ></form-input>
 
-        <label>
-          Email Address
-          <input
-            type="email"
-            .value="${this.employee.email}"
-            @input="${(e) => (this.employee.email = e.target.value)}"
-            required
-          />
-        </label>
+        <form-input
+          label="Email Address"
+          type="email"
+          value="${this.employee.email}"
+          @input="${(e) => (this.employee.email = e.target.value)}"
+          pattern="${emailPattern}"
+          required
+        ></form-input>
 
         <label>
           Department
@@ -150,23 +142,19 @@ export class EmployeeForm extends LitElement {
           </select>
         </label>
 
-        <button type="submit">
-          ${this.isEditMode ? 'Update Employee' : 'Add Employee'}
-        </button>
+        <icon-button
+          icon="fa-save"
+          label="${this.isEditMode ? 'Update Employee' : 'Add Employee'}"
+          .disabled="${this.errors.length > 0}"
+          @click=${this.handleSubmit}
+        >
+        </icon-button>
       </form>
     `;
   }
 
   handleSubmit(e) {
     e.preventDefault();
-
-    // Confirm before editing
-    if (this.isEditMode) {
-      const confirmEdit = confirm(
-        'Are you sure you want to update this employee record?'
-      );
-      if (!confirmEdit) return;
-    }
 
     // EF: For this case CustomEvent is not needed
     // Trigger an event to handle the form data
@@ -177,14 +165,32 @@ export class EmployeeForm extends LitElement {
     // });
     // this.dispatchEvent(formEvent);
 
-    store.dispatch(
-      this.employee.id
-        ? updateEmployeeAct(this.employee)
-        : addEmployeeAct(this.employee)
-    );
+    this.errors = [];
+    const inputs = this.shadowRoot.querySelectorAll('form-input');
+    inputs.forEach((input) => {
+      if (!input.validate()) {
+        this.errors.push(input.error);
+      }
+    });
 
-    // Navigate back to the list page
-    Router.go('/');
+    if (this.errors.length === 0) {
+      // Confirm before editing
+      if (this.isEditMode) {
+        const confirmEdit = confirm(
+          'Are you sure you want to update this employee record?'
+        );
+        if (!confirmEdit) return;
+      }
+
+      store.dispatch(
+        this.employee.id
+          ? updateEmployeeAct(this.employee)
+          : addEmployeeAct(this.employee)
+      );
+
+      // Navigate back to the list page
+      Router.go('/');
+    }
   }
 }
 
