@@ -13,7 +13,7 @@ const INITIAL_STATE = {
       lastName: 'Kautzer',
       employmentDate: '2024-03-16',
       birthDate: '1986-08-20',
-      phone: '9918904169',
+      phone: '5556667788',
       email: 'imelda77@gmail.com',
       department: 'Analytics',
       position: 'Junior',
@@ -24,7 +24,7 @@ const INITIAL_STATE = {
       lastName: 'Steuber',
       employmentDate: '2024-03-07',
       birthDate: '1984-02-12',
-      phone: '8556131464',
+      phone: '5554443322',
       email: 'Laury.Satterfield@yahoo.com',
       department: 'Tech',
       position: 'Senior',
@@ -42,7 +42,16 @@ export const employeeReducer = (state = INITIAL_STATE, action) => {
       return {employees: payload, isLoading: false};
 
     case EMP_ACTIONS.add: {
-      return {employees: [...state.employees, payload], isLoading: false};
+      return {
+        employees: [
+          ...state.employees,
+          {
+            ...payload,
+            id: Math.floor(Math.random() * 9999999999999).toString(),
+          },
+        ],
+        isLoading: false,
+      };
     }
 
     case EMP_ACTIONS.update: {
