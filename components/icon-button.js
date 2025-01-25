@@ -31,8 +31,8 @@ export class IconButton extends LitElement {
     }
 
     button.sm {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.75rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
     }
     button.lg {
       padding: 0.75rem 1.5rem;
@@ -109,7 +109,7 @@ export class IconButton extends LitElement {
           ? html`<fa-icon
               class="fas ${this.icon}"
               size="${this.size === 'sm'
-                ? '.8rem'
+                ? '.85rem'
                 : this.size === 'lg'
                 ? '1.25rem'
                 : '1rem'}"
