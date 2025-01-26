@@ -70,7 +70,7 @@ export class EmployeeForm extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     // Vaadin Router'dan gelen parametre
-    const {id} = this.location.params;
+    const id = this.location?.params?.id;
     if (id) {
       this.employee = store.getState().employees?.find((emp) => emp.id === id);
       // TODO: employee bulunamazsa durumu handle edilmeli
