@@ -26,6 +26,8 @@ export class EmployeeList extends connect(store)(LitElement) {
     table {
       width: 100%;
       margin: 0.5rem 0;
+      table-layout: auto;
+      word-wrap: break-word;
     }
 
     th,
@@ -34,6 +36,7 @@ export class EmployeeList extends connect(store)(LitElement) {
       padding: 0.5rem 0.75rem;
       text-align: left;
       border-bottom: 1px solid #ccc;
+      word-break: break-word;
     }
     ul {
       padding-left: 0;
@@ -220,10 +223,10 @@ export class EmployeeList extends connect(store)(LitElement) {
                           ${emp.lastName}
                         </td>
                         <td data-label="${msg('Phone')}">${emp.phone}</td>
+                        <td data-label="${msg('Email')}">${emp.email}</td>
                         <td data-label="${msg('Department')}">
                           ${msg(emp.department)}
                         </td>
-                        <td data-label="${msg('Email')}">${emp.email}</td>
                         <td data-label="${msg('Position')}">
                           ${msg(emp.position)}
                         </td>
