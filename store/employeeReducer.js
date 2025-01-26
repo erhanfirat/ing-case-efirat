@@ -10,7 +10,6 @@ export const EMP_ACTIONS = {
 
 const INITIAL_STATE = {
   employees: [...employeeData],
-  isLoading: false,
 };
 
 export const employeeReducer = (state = INITIAL_STATE, action) => {
@@ -18,10 +17,11 @@ export const employeeReducer = (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case EMP_ACTIONS.set:
-      return {employees: payload, isLoading: false};
+      return {...state, employees: payload};
 
     case EMP_ACTIONS.add: {
       return {
+        ...state,
         employees: [
           ...state.employees,
           {
@@ -29,7 +29,6 @@ export const employeeReducer = (state = INITIAL_STATE, action) => {
             id: Math.floor(Math.random() * 9999999999999).toString(),
           },
         ],
-        isLoading: false,
       };
     }
 
@@ -37,13 +36,13 @@ export const employeeReducer = (state = INITIAL_STATE, action) => {
       const newEmployees = state.employees.map((emp) =>
         emp.id === payload.id ? payload : emp
       );
-      return {employees: newEmployees, isLoading: false};
+      return {...state, employees: newEmployees};
     }
 
     case EMP_ACTIONS.delete: {
       return {
+        ...state,
         employees: state.employees.filter((e) => e.id !== payload),
-        isLoading: false,
       };
     }
 
