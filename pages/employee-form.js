@@ -33,11 +33,8 @@ export class EmployeeForm extends LitElement {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      max-width: 400px;
+      max-width: 450px;
       margin: auto;
-    }
-    label {
-      font-weight: bold;
     }
     input,
     select,
@@ -47,6 +44,24 @@ export class EmployeeForm extends LitElement {
     }
     button {
       cursor: pointer;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .form-group select {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
   `;
 
@@ -115,32 +130,36 @@ export class EmployeeForm extends LitElement {
           required
         ></form-input>
 
-        <label>
-          Department
-          <select
-            .value="${this.employee.department}"
-            @change="${(e) => (this.employee.department = e.target.value)}"
-            required
-          >
-            <option value="" disabled selected>Select Department</option>
-            <option value="Analytics">Analytics</option>
-            <option value="Tech">Tech</option>
-          </select>
-        </label>
+        <div class="form-group">
+          <label>Department</label>
+          <div class="input-container">
+            <select
+              .value="${this.employee.department}"
+              @change="${(e) => (this.employee.department = e.target.value)}"
+              required
+            >
+              <option value="" disabled selected>Select Department</option>
+              <option value="Analytics">Analytics</option>
+              <option value="Tech">Tech</option>
+            </select>
+          </div>
+        </div>
 
-        <label>
-          Position
-          <select
-            .value="${this.employee.position}"
-            @change="${(e) => (this.employee.position = e.target.value)}"
-            required
-          >
-            <option value="" disabled selected>Select Position</option>
-            <option value="Junior">Junior</option>
-            <option value="Medior">Medior</option>
-            <option value="Senior">Senior</option>
-          </select>
-        </label>
+        <div class="form-group">
+          <label>Position</label>
+          <div class="input-container">
+            <select
+              .value="${this.employee.position}"
+              @change="${(e) => (this.employee.position = e.target.value)}"
+              required
+            >
+              <option value="" disabled selected>Select Position</option>
+              <option value="Junior">Junior</option>
+              <option value="Medior">Medior</option>
+              <option value="Senior">Senior</option>
+            </select>
+          </div>
+        </div>
 
         <icon-button
           icon="fa-save"
