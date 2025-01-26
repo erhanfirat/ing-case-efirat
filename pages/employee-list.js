@@ -30,7 +30,7 @@ export class EmployeeList extends connect(store)(LitElement) {
     th,
     td,
     li {
-      padding: 0.25rem 0.5rem;
+      padding: 0.5rem 0.75rem;
       text-align: left;
       border-bottom: 1px solid #ccc;
     }
@@ -39,6 +39,9 @@ export class EmployeeList extends connect(store)(LitElement) {
     }
     li {
       list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     td:last-child {
       padding: 0.25rem 0;
@@ -72,6 +75,9 @@ export class EmployeeList extends connect(store)(LitElement) {
       div.list-header {
         flex-direction: column;
         justify-content: center;
+      }
+      div.list-header form-input {
+        width: 100%;
       }
 
       table,
@@ -227,8 +233,11 @@ export class EmployeeList extends connect(store)(LitElement) {
                 ${paginatedEmployees.map(
                   (emp) => html`
                     <li>
-                      ${emp.firstName} ${emp.lastName} | ${emp.department}
-                      [${emp.position}] ${actionButtons(emp.id)}
+                      <span>
+                        ${emp.firstName} ${emp.lastName} | ${emp.department}
+                        [${emp.position}]
+                      </span>
+                      <div>${actionButtons(emp.id)}</div>
                     </li>
                   `
                 )}
