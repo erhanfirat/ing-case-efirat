@@ -33,4 +33,6 @@ export function initRouter(outlet) {
       },
     },
   ]);
+
+  return router;
 }

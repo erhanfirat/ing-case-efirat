@@ -9,13 +9,6 @@ import {initRouter} from './pages/route';
 import './components/navigation-menu.js';
 import 'fa-icons';
 
-/**
- * An example element.
- *
- * @fires count-changed - Indicates when the count changes
- * @slot - This element has a slot
- * @csspart button - The button
- */
 export class App extends LitElement {
   static get styles() {
     return css`
@@ -36,49 +29,36 @@ export class App extends LitElement {
   static get properties() {
     return {
       /**
-       * The name to say "Hello" to.
+       * Current path of the application
        * @type {string}
        */
-      name: {type: String},
-
-      /**
-       * The number of times the button has been clicked.
-       * @type {number}
-       */
-      count: {type: Number},
+      activePath: {type: String},
     };
   }
 
   constructor() {
     super();
-    this.name = 'World';
-    this.count = 0;
+    this.activePath = '/';
   }
 
   firstUpdated() {
     const outlet = this.shadowRoot.getElementById('router-outlet');
-    initRouter(outlet); // Initialize the router and attach it to the outlet
+    this.router = initRouter(outlet); // Initialize the router and attach it to the outlet
+    const _this = this;
+    this.router.ready.then(() => {
+      _this.router.subscribe();
+    });
+
+    window.addEventListener('popstate', () => {
+      this.activePath = window.location.pathname;
+    });
   }
 
   render() {
     return html`
-      <navigation-menu></navigation-menu>
+      <navigation-menu activePath="${this.activePath}"></navigation-menu>
       <main id="router-outlet"></main>
     `;
-  }
-
-  _onClick() {
-    this.count++;
-    this.dispatchEvent(new CustomEvent('count-changed'));
-  }
-
-  /**
-   * Formats a greeting
-   * @param name {string} The name to say "Hello" to
-   * @returns {string} A greeting directed at `name`
-   */
-  sayHello(name) {
-    return `Hello, ${name}`;
   }
 }
 
