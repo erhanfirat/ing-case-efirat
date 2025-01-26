@@ -4,6 +4,7 @@ import {store} from '../store/store';
 import {addEmployeeAct, updateEmployeeAct} from '../store/employeeActions';
 import '.././components/icon-button.js';
 import '.././components/form-input.js';
+import {msg, updateWhenLocaleChanges} from '@lit/localize';
 
 export class EmployeeForm extends LitElement {
   static properties = {
@@ -26,6 +27,7 @@ export class EmployeeForm extends LitElement {
     };
     this.isEditMode = false;
     this.errors = [];
+    updateWhenLocaleChanges(this);
   }
 
   static styles = css`
@@ -82,21 +84,21 @@ export class EmployeeForm extends LitElement {
     return html`
       <form @submit="${this.handleSubmit}">
         <form-input
-          label="First Name"
+          label="${msg('First Name')}"
           value="${this.employee.firstName}"
           @input="${(e) => (this.employee.firstName = e.target.value)}"
           required
         ></form-input>
 
         <form-input
-          label="Last Name"
+          label="${msg('Last Name')}"
           value="${this.employee.lastName}"
           @input="${(e) => (this.employee.lastName = e.target.value)}"
           required
         ></form-input>
 
         <form-input
-          label="Date of Employment"
+          label="${msg('Date of Employment')}"
           type="date"
           value="${this.employee.employmentDate}"
           @input="${(e) => (this.employee.employmentDate = e.target.value)}"
@@ -104,7 +106,7 @@ export class EmployeeForm extends LitElement {
         ></form-input>
 
         <form-input
-          label="Date of Birth"
+          label="${msg('Date of Birth')}"
           type="date"
           value="${this.employee.birthDate}"
           @input="${(e) => (this.employee.birthDate = e.target.value)}"
@@ -112,17 +114,17 @@ export class EmployeeForm extends LitElement {
         ></form-input>
 
         <form-input
-          label="Phone Number (5XX XXX XXXX)"
+          label="${msg('Phone Number (5XX XXX XXXX)')}"
           type="tel"
           value="${this.employee.phone}"
           @input="${(e) => (this.employee.phone = e.target.value)}"
           pattern="[0-9]{10}"
-          title="Phone number must be 10 digits"
+          title="${msg('Phone number must be 10 digits')}"
           required
         ></form-input>
 
         <form-input
-          label="Email Address"
+          label="${msg('Email Address')}"
           type="email"
           value="${this.employee.email}"
           @input="${(e) => (this.employee.email = e.target.value)}"
@@ -131,22 +133,24 @@ export class EmployeeForm extends LitElement {
         ></form-input>
 
         <div class="form-group">
-          <label>Department</label>
+          <label>${msg('Department')}</label>
           <div class="input-container">
             <select
               .value="${this.employee.department}"
               @change="${(e) => (this.employee.department = e.target.value)}"
               required
             >
-              <option value="" disabled selected>Select Department</option>
-              <option value="Analytics">Analytics</option>
-              <option value="Tech">Tech</option>
+              <option value="" disabled selected>
+                ${msg('Select Department')}
+              </option>
+              <option value="Analytics">${msg('Analytics')}</option>
+              <option value="Tech">${msg('Tech')}</option>
             </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label>Position</label>
+          <label>${msg('Position')}</label>
           <div class="input-container">
             <select
               .value="${this.employee.position}"
@@ -154,16 +158,18 @@ export class EmployeeForm extends LitElement {
               required
             >
               <option value="" disabled selected>Select Position</option>
-              <option value="Junior">Junior</option>
-              <option value="Medior">Medior</option>
-              <option value="Senior">Senior</option>
+              <option value="Junior">${msg('Junior')}</option>
+              <option value="Medior">${msg('Medior')}</option>
+              <option value="Senior">${msg('Senior')}</option>
             </select>
           </div>
         </div>
 
         <icon-button
           icon="fa-save"
-          label="${this.isEditMode ? 'Update Employee' : 'Add Employee'}"
+          label="${this.isEditMode
+            ? msg('Update Employee')
+            : msg('Add Employee')}"
           .disabled="${this.errors.length > 0}"
           @click=${this.handleSubmit}
         >
@@ -196,7 +202,7 @@ export class EmployeeForm extends LitElement {
       // Confirm before editing
       if (this.isEditMode) {
         const confirmEdit = confirm(
-          'Are you sure you want to update this employee record?'
+          msg('Are you sure you want to update this employee record?')
         );
         if (!confirmEdit) return;
       }

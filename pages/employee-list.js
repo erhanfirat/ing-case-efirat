@@ -3,6 +3,7 @@ import {Router} from '@vaadin/router';
 import {connect} from 'pwa-helpers';
 import {store} from '../store/store';
 import {deleteEmployeeAct} from '../store/employeeActions';
+import {msg, updateWhenLocaleChanges} from '@lit/localize';
 import '.././components/icon-button.js';
 import '.././components/form-input.js';
 
@@ -131,6 +132,7 @@ export class EmployeeList extends connect(store)(LitElement) {
     this.viewMode = 'table';
     this.isLoading = true;
     this.error = null;
+    updateWhenLocaleChanges(this);
   }
 
   stateChanged(state) {
@@ -153,7 +155,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         @click="${() => this.editEmployee(empId)}"
         icon="fa-edit"
         onlyIcon
-        title="Update"
+        title="${msg('Update')}"
         size="sm"
       ></icon-button>
       <icon-button
@@ -161,7 +163,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         icon="fa-trash"
         onlyIcon
         color="red"
-        title="Delete"
+        title="${msg('Delete')}"
         size="sm"
       ></icon-button>`;
 
@@ -170,7 +172,7 @@ export class EmployeeList extends connect(store)(LitElement) {
         <div class="list-header">
           <form-input
             type="text"
-            placeholder="Search employees"
+            placeholder="${msg('Search Employees')}"
             icon="fa-search"
             @input="${(e) => (this.searchQuery = e.target.value)}"
           ></form-input>
@@ -178,13 +180,13 @@ export class EmployeeList extends connect(store)(LitElement) {
             <icon-button
               @click="${() => (this.viewMode = 'list')}"
               icon="fa-list"
-              label="List View"
+              label="${msg('List View')}"
               ?disabled=${this.viewMode === 'list'}
             ></icon-button>
             <icon-button
               icon="fa-table"
               @click="${() => (this.viewMode = 'table')}"
-              label="Table View"
+              label="${msg('Table View')}"
               ?disabled=${this.viewMode === 'table'}
             ></icon-button>
           </div>
@@ -196,31 +198,41 @@ export class EmployeeList extends connect(store)(LitElement) {
               <table>
                 <thead>
                   <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Department</th>
-                    <th>Position</th>
-                    <th>Date of Employment</th>
-                    <th>Birth Date</th>
-                    <th>Actions</th>
+                    <th>${msg('First Name')}</th>
+                    <th>${msg('Last Name')}</th>
+                    <th>${msg('Phone')}</th>
+                    <th>${msg('Email')}</th>
+                    <th>${msg('Department')}</th>
+                    <th>${msg('Position')}</th>
+                    <th>${msg('Date of Employment')}</th>
+                    <th>${msg('Birth Date')}</th>
+                    <th>${msg('Actions')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   ${paginatedEmployees.map(
                     (emp) => html`
                       <tr>
-                        <td data-label="First Name">${emp.firstName}</td>
-                        <td data-label="Last Name">${emp.lastName}</td>
-                        <td data-label="Phone">${emp.phone}</td>
-                        <td data-label="Department">${emp.department}</td>
-                        <td data-label="Email">${emp.email}</td>
-                        <td data-label="Position">${emp.position}</td>
-                        <td data-label="Employment Date">
+                        <td data-label="${msg('First Name')}">
+                          ${emp.firstName}
+                        </td>
+                        <td data-label="${msg('Last Name')}">
+                          ${emp.lastName}
+                        </td>
+                        <td data-label="${msg('Phone')}">${emp.phone}</td>
+                        <td data-label="${msg('Department')}">
+                          ${msg(emp.department)}
+                        </td>
+                        <td data-label="${msg('Email')}">${emp.email}</td>
+                        <td data-label="${msg('Position')}">
+                          ${msg(emp.position)}
+                        </td>
+                        <td data-label="${msg('Employment Date')}">
                           ${emp.employmentDate}
                         </td>
-                        <td data-label="Birth Date">${emp.birthDate}</td>
+                        <td data-label="${msg('Birth Date')}">
+                          ${emp.birthDate}
+                        </td>
                         <td>${actionButtons(emp.id)}</td>
                       </tr>
                     `
@@ -234,8 +246,8 @@ export class EmployeeList extends connect(store)(LitElement) {
                   (emp) => html`
                     <li>
                       <span>
-                        ${emp.firstName} ${emp.lastName} | ${emp.department}
-                        [${emp.position}]
+                        ${emp.firstName} ${emp.lastName} |
+                        ${msg(emp.department)} [${msg(emp.position)}]
                       </span>
                       <div>${actionButtons(emp.id)}</div>
                     </li>
@@ -283,7 +295,7 @@ export class EmployeeList extends connect(store)(LitElement) {
   }
 
   deleteEmployee(id) {
-    if (confirm('Are you sure you want to delete this employee?')) {
+    if (confirm(msg('Are you sure you want to delete this employee?'))) {
       store.dispatch(deleteEmployeeAct(id));
     }
   }

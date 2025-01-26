@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<file target-language="tr-TR" source-language="en" original="lit-localize-inputs" datatype="plaintext">
+<body>
+<trans-unit id="sd19ea328da4fea28">
+  <source>Search Employees</source>
+  <target>Personel Ara</target>
+</trans-unit>
+<trans-unit id="s70315aaffba9e636">
+  <source>List View</source>
+  <target>Liste</target>
+</trans-unit>
+<trans-unit id="s3d9ff57b4e7cc370">
+  <source>Table View</source>
+  <target>Tablo</target>
+</trans-unit>
+<trans-unit id="s2c57913ffd36d298">
+  <source>First Name</source>
+  <target>İsim</target>
+</trans-unit>
+<trans-unit id="s95a75a2392af5780">
+  <source>Last Name</source>
+  <target>Soyisim</target>
+</trans-unit>
+<trans-unit id="sf1bc83d2509bafcf">
+  <source>Phone</source>
+  <target>Telefon</target>
+</trans-unit>
+<trans-unit id="sd1f44f1a8bc20e67">
+  <source>Email</source>
+  <target>Email</target>
+</trans-unit>
+<trans-unit id="s1e45a4d7635fbda7">
+  <source>Department</source>
+  <target>Bölüm</target>
+</trans-unit>
+<trans-unit id="sc1611c0558728a2a">
+  <source>Position</source>
+  <target>Deneyim</target>
+</trans-unit>
+<trans-unit id="s772528836550622c">
+  <source>Date of Employment</source>
+  <target>İşe Giriş Tarihi</target>
+</trans-unit>
+<trans-unit id="sc5887619051e33be">
+  <source>Birth Date</source>
+  <target>Doğum Tarihi</target>
+</trans-unit>
+<trans-unit id="s8af61807443f32a4">
+  <source>Actions</source>
+  <target>İşlemler</target>
+</trans-unit>
+<trans-unit id="s3db6c3999daeecdb">
+  <source>Employee List</source>
+  <target>Personel Listesi</target>
+</trans-unit>
+<trans-unit id="s32c9b3dd030fc24c">
+  <source>Add Employee</source>
+  <target>Personel Ekle</target>
+</trans-unit>
+<trans-unit id="s8b0432eecbd8b034">
+  <source>Update</source>
+  <target>Güncelle</target>
+</trans-unit>
+<trans-unit id="sdc673e73b5c13aea">
+  <source>Delete</source>
+  <target>Sil</target>
+</trans-unit>
+<trans-unit id="se7a47ae0fba5aae5">
+  <source>Employment Date</source>
+  <target>İşe Giriş Tarihi</target>
+</trans-unit>
+<trans-unit id="sb15e48a6ab4e4c27">
+  <source>Are you sure you want to delete this employee?</source>
+  <target>Bu personeli silmek istediğinizden emin misiniz?</target>
+</trans-unit>
+<trans-unit id="s53802e3f37d072a7">
+  <source>Date of Birth</source>
+  <target>Doğum Tarihi</target>
+</trans-unit>
+<trans-unit id="s621dd2959a8598bc">
+  <source>Phone Number (5XX XXX XXXX)</source>
+  <target>Telefon Numarası (5XX XXX XXXX)</target>
+</trans-unit>
+<trans-unit id="s67137f77bf99ce3f">
+  <source>Phone number must be 10 digits</source>
+  <target>Telefon numarası 10 adet rakamdan oluşmalıdır (5XX XXX XX XX)</target>
+</trans-unit>
+<trans-unit id="s1e2e135dac5ba993">
+  <source>Email Address</source>
+  <target>Eposta Adresi</target>
+</trans-unit>
+<trans-unit id="s3ced410ef8850869">
+  <source>Select Department</source>
+  <target>Bölüm Seçiniz</target>
+</trans-unit>
+<trans-unit id="s2c2b04f2561a1d4b">
+  <source>Analytics</source>
+  <target>Analiz</target>
+</trans-unit>
+<trans-unit id="s24aadbfb1b1a1a11">
+  <source>Tech</source>
+  <target>Teknik</target>
+</trans-unit>
+<trans-unit id="s7404d9208a486318">
+  <source>Junior</source>
+  <target>Başlangıç Seviyesi</target>
+</trans-unit>
+<trans-unit id="sacc4d771f79ccced">
+  <source>Medior</source>
+  <target>Deneyimli</target>
+</trans-unit>
+<trans-unit id="s8a37652cc28d3c55">
+  <source>Senior</source>
+  <target>Uzman</target>
+</trans-unit>
+<trans-unit id="sc8306ad1a022ddcc">
+  <source>Update Employee</source>
+  <target>Peronel Güncelle</target>
+</trans-unit>
+<trans-unit id="s008c458c1a1445da">
+  <source>Are you sure you want to update this employee record?</source>
+  <target>Bu personel kaydını güncellemek istediğinizden emin misiniz?</target>
+</trans-unit>
+</body>
+</file>
+</xliff>
