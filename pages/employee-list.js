@@ -57,6 +57,7 @@ export class EmployeeList extends connect(store)(LitElement) {
 
     .pagination {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       gap: 0.1rem;
     }
@@ -65,6 +66,53 @@ export class EmployeeList extends connect(store)(LitElement) {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    @media screen and (max-width: 600px) {
+      div.list-header {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      table,
+      thead,
+      tbody,
+      th,
+      td,
+      tr {
+        display: block;
+      }
+
+      th {
+        display: none; /* Başlıkları gizler */
+      }
+
+      tr {
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #333;
+      }
+
+      td {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 0.5rem;
+      }
+
+      td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        font-size: 0.75rem;
+        display: block;
+        margin-bottom: 5px;
+        margin-left: -0.5rem;
+        color: #777;
+      }
+
+      td:last-child {
+        text-align: center;
+        padding-bottom: 1rem;
+      }
     }
   `;
 
@@ -157,14 +205,16 @@ export class EmployeeList extends connect(store)(LitElement) {
                   ${paginatedEmployees.map(
                     (emp) => html`
                       <tr>
-                        <td>${emp.firstName}</td>
-                        <td>${emp.lastName}</td>
-                        <td>${emp.phone}</td>
-                        <td>${emp.department}</td>
-                        <td>${emp.email}</td>
-                        <td>${emp.position}</td>
-                        <td>${emp.employmentDate}</td>
-                        <td>${emp.birthDate}</td>
+                        <td data-label="First Name">${emp.firstName}</td>
+                        <td data-label="Last Name">${emp.lastName}</td>
+                        <td data-label="Phone">${emp.phone}</td>
+                        <td data-label="Department">${emp.department}</td>
+                        <td data-label="Email">${emp.email}</td>
+                        <td data-label="Position">${emp.position}</td>
+                        <td data-label="Employment Date">
+                          ${emp.employmentDate}
+                        </td>
+                        <td data-label="Birth Date">${emp.birthDate}</td>
                         <td>${actionButtons(emp.id)}</td>
                       </tr>
                     `
