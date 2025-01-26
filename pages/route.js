@@ -8,7 +8,7 @@ export function initRouter(outlet) {
       path: '/',
       component: 'employee-list',
       action: async () => {
-        await import('./employee-list.js'); // Lazy-load the employee list component
+        await import('./employee-list.js');
       },
     },
     {
@@ -22,14 +22,14 @@ export function initRouter(outlet) {
       path: '/edit/:id',
       component: 'employee-form',
       action: async () => {
-        await import('./employee-form.js'); // Lazy-load the employee form component
+        await import('./employee-form.js');
       },
     },
     {
       path: '(.*)',
       component: 'not-found',
       action: async () => {
-        await import('./not-found.js'); // Create a simple 404 component
+        await import('./not-found.js');
       },
     },
   ]);

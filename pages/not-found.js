@@ -1,4 +1,5 @@
 import {LitElement, css, html} from 'lit';
+import './../components/navigation-menu';
 
 export class NotFound extends LitElement {
   static styles = css`
@@ -9,7 +10,10 @@ export class NotFound extends LitElement {
   `;
 
   render() {
-    return html` <h1>404 - Not Found</h1> `;
+    return html`
+      <navigation-menu></navigation-menu>
+      <h1>404 - Not Found</h1>
+    `;
   }
 }
 customElements.define('not-found', NotFound);
